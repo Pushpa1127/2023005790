@@ -1,31 +1,27 @@
-import { Card, CardContent, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
 
-export default function NotificationCard({
-  notification,
-  viewed,
-}) {
+function NotificationCard({ notification }) {
   return (
-    <Card
-      sx={{
-        mb: 2,
-        backgroundColor: viewed
-          ? "#f5f5f5"
-          : "#e3f2fd",
-      }}
-    >
+    <Card sx={{ mb: 2 }}>
       <CardContent>
         <Typography variant="h6">
           {notification.Type}
         </Typography>
 
-        <Typography variant="body1">
+        <Typography>
           {notification.Message}
         </Typography>
 
-        <Typography variant="caption">
+        <Typography variant="body2">
           {notification.Timestamp}
         </Typography>
       </CardContent>
     </Card>
   );
 }
+
+export default NotificationCard;

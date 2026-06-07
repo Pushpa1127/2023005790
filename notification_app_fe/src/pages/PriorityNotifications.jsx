@@ -1,57 +1,33 @@
-import { useEffect, useState } from "react";
-import { getNotifications } from "../services/api";
 import NotificationCard from "../components/NotificationCard";
-import Navbar from "../components/Navbar";
-import { Container } from "@mui/material";
 
-export default function PriorityNotifications() {
-  const [notifications, setNotifications] =
-    useState([]);
+const notifications = [
+  {
+    ID: 3,
+    Type: "Placement",
+    Message: "AMD hiring",
+    Timestamp: "2026-04-22 17:49:42",
+  },
+  {
+    ID: 1,
+    Type: "Result",
+    Message: "project-review",
+    Timestamp: "2026-04-22 17:50:18",
+  },
+];
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
-    const data = await getNotifications(
-      1,
-      20
-    );
-
-    const priority = {
-      Placement: 3,
-      Result: 2,
-      Event: 1,
-    };
-
-    const sorted = [...data].sort(
-      (a, b) =>
-        priority[b.Type] -
-        priority[a.Type]
-    );
-
-    setNotifications(sorted.slice(0, 10));
-  };
-
+function PriorityNotifications() {
   return (
-    <>
-      <Navbar />
+    <div style={{ padding: "20px" }}>
+      <h2>Priority Notifications</h2>
 
-      <Container sx={{ mt: 3 }}>
-        <h2>
-          Top Priority Notifications
-        </h2>
-
-        {notifications.map((n) => (
-          <NotificationCard
-            key={n.ID}
-            notification={n}
-            viewed={
-              localStorage.getItem(n.ID)
-            }
-          />
-        ))}
-      </Container>
-    </>
+      {notifications.map((item) => (
+        <NotificationCard
+          key={item.ID}
+          notification={item}
+        />
+      ))}
+    </div>
   );
 }
+
+export default PriorityNotifications;

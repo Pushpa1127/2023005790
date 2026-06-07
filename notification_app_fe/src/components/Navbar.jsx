@@ -1,20 +1,28 @@
-import axios from "axios";
+import { AppBar, Toolbar, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
-const API_URL =
-  "http://4.224.186.213/evaluation-service/notifications";
+function Navbar() {
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <Button
+          color="inherit"
+          component={Link}
+          to="/"
+        >
+          All Notifications
+        </Button>
 
-export const getNotifications = async (
-  page = 1,
-  limit = 10,
-  type = ""
-) => {
-  let url = `${API_URL}?page=${page}&limit=${limit}`;
+        <Button
+          color="inherit"
+          component={Link}
+          to="/priority"
+        >
+          Priority Notifications
+        </Button>
+      </Toolbar>
+    </AppBar>
+  );
+}
 
-  if (type) {
-    url += `&notification_type=${type}`;
-  }
-
-  const response = await axios.get(url);
-
-  return response.data;
-};
+export default Navbar;

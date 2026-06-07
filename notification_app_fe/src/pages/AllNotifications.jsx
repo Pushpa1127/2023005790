@@ -1,87 +1,39 @@
-import { useEffect, useState } from "react";
-import { getNotifications } from "../services/api";
 import NotificationCard from "../components/NotificationCard";
-import Navbar from "../components/Navbar";
-import {
-  Container,
-  Select,
-  MenuItem,
-  TextField,
-} from "@mui/material";
 
-export default function AllNotifications() {
-  const [notifications, setNotifications] = useState([]);
-  const [type, setType] = useState("");
-  const [limit, setLimit] = useState(10);
+const notifications = [
+  {
+    ID: 1,
+    Type: "Result",
+    Message: "project-review",
+    Timestamp: "2026-04-22 17:50:18",
+  },
+  {
+    ID: 2,
+    Type: "Event",
+    Message: "tech-fest",
+    Timestamp: "2026-04-22 17:50:06",
+  },
+  {
+    ID: 3,
+    Type: "Placement",
+    Message: "AMD hiring",
+    Timestamp: "2026-04-22 17:49:42",
+  },
+];
 
-  useEffect(() => {
-    loadNotifications();
-  }, [type, limit]);
-
-  const loadNotifications = async () => {
-    try {
-      const data = await getNotifications(
-        1,
-        limit,
-        type
-      );
-
-      setNotifications(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+function AllNotifications() {
   return (
-    <>
-      <Navbar />
+    <div style={{ padding: "20px" }}>
+      <h2>All Notifications</h2>
 
-      <Container sx={{ mt: 3 }}>
-        <h2>All Notifications</h2>
-
-        <Select
-          value={type}
-          onChange={(e) =>
-            setType(e.target.value)
-          }
-          sx={{ mr: 2 }}
-        >
-          <MenuItem value="">
-            All
-          </MenuItem>
-          <MenuItem value="Event">
-            Event
-          </MenuItem>
-          <MenuItem value="Result">
-            Result
-          </MenuItem>
-          <MenuItem value="Placement">
-            Placement
-          </MenuItem>
-        </Select>
-
-        <TextField
-          type="number"
-          label="Limit"
-          value={limit}
-          onChange={(e) =>
-            setLimit(e.target.value)
-          }
+      {notifications.map((item) => (
+        <NotificationCard
+          key={item.ID}
+          notification={item}
         />
-
-        <br />
-        <br />
-
-        {notifications.map((n) => (
-          <NotificationCard
-            key={n.ID}
-            notification={n}
-            viewed={
-              localStorage.getItem(n.ID)
-            }
-          />
-        ))}
-      </Container>
-    </>
+      ))}
+    </div>
   );
 }
+
+export default AllNotifications;
